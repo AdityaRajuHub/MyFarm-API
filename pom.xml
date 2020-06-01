@@ -11,7 +11,7 @@
 	<groupId>com.naa</groupId>
 	<artifactId>spring-security-jwt</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>spring-security-jwt</name>
+	<name>myFarm</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
