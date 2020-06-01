@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.naa</groupId>
-	<artifactId>spring-security-jwt</artifactId>
+	<artifactId>myFarm</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>myFarm</name>
-	<description>Demo project for Spring Boot</description>
+	<name>MyFarmAPI</name>
+	<description>API for MyFarm</description>
 
 	<properties>
 		<java.version>1.8</java.version>
