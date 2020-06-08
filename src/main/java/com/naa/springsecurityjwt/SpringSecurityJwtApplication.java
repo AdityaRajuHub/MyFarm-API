@@ -1,5 +1,7 @@
 package com.naa.springsecurityjwt;
 
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -18,18 +20,25 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 
 import com.naa.springsecurityjwt.models.AuthenticationRequest;
 import com.naa.springsecurityjwt.models.AuthenticationResponse;
 import com.naa.springsecurityjwt.util.JwtUtil;
-
 import com.naa.springsecurityjwt.filters.JwtRequestFilter;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {
+        "com.naa"
+       
+})
 public class SpringSecurityJwtApplication {
 
 	public static void main(String[] args) {
@@ -39,6 +48,7 @@ public class SpringSecurityJwtApplication {
 }
 
 @RestController
+@CrossOrigin(origins = "*", maxAge = 3600)
 class HelloWorldController {
 
 	@Autowired
@@ -50,7 +60,7 @@ class HelloWorldController {
 	@Autowired
 	private MyUserDetailsService userDetailsService;
 
-	@RequestMapping({ "/hello" })
+	@RequestMapping(value = "/hello" )
 	public String firstPage() {
 		return "Hello World";
 	}
@@ -71,9 +81,9 @@ class HelloWorldController {
 		final UserDetails userDetails = userDetailsService
 				.loadUserByUsername(authenticationRequest.getUsername());
 
-		final String jwt = jwtTokenUtil.generateToken(userDetails);
+		final String token = jwtTokenUtil.generateToken(userDetails);
 
-		return ResponseEntity.ok(new AuthenticationResponse(jwt));
+		return ResponseEntity.ok(new AuthenticationResponse(token));
 	}
 
 }
@@ -100,16 +110,30 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	public AuthenticationManager authenticationManagerBean() throws Exception {
 		return super.authenticationManagerBean();
 	}
-
-	@Override
+		@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity.csrf().disable()
 				.authorizeRequests().antMatchers("/authenticate").permitAll().
 						anyRequest().authenticated().and().
 						exceptionHandling().and().sessionManagement()
-				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().cors();
 		httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
 	}
+	
+	 @Bean
+	    CorsConfigurationSource corsConfigurationSource() {
+	        CorsConfiguration configuration = new CorsConfiguration();
+	        configuration.setAllowedOrigins(Arrays.asList("*"));
+	        configuration.setAllowedMethods(Arrays.asList("GET","POST"));
+	        configuration.setAllowCredentials(true);
+	        //the below three lines will add the relevant CORS response headers
+	        configuration.addAllowedOrigin("*");
+	        configuration.addAllowedHeader("*");
+	        configuration.addAllowedMethod("*");
+	        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+	        source.registerCorsConfiguration("/**", configuration);
+	        return source;
+	    }
 
 }
