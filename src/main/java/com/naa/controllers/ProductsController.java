@@ -23,10 +23,15 @@ public class ProductsController {
 		ProductListResponse resp = new ProductListResponse();
 		List<Product> productsList = Lists.newArrayList();
 		try {
-			//get from service
+			
 			Product p1 = new Product();
 			p1.setId(1);
-			p1.setName("Apple");
+			p1.setName("Mango");
+			p1.setImage("fruits/mango.jpg");
+			p1.setSubTitle("Banginapally");
+			p1.setPrice(80.0);
+			p1.setUnits("Kg");
+			p1.setAvailableQty(400);
 			productsList.add(p1);
 			resp.setProducts(productsList);
 		} catch (Exception e) {
