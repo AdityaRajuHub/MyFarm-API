@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.naa.model.Product;
 import com.naa.service.ProductService;
 
-@RestController
+@RestController(value = "product")
 public class ProductController {
 	
 	@Autowired
 	ProductService productService;
 
-	@RequestMapping(value = "/products")
+	@RequestMapping(value = "/product/getAll")
 	public List<Product> getProducts() {
 		
 		List<Product> products = new ArrayList<Product>();
