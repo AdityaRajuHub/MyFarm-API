@@ -1,0 +1,41 @@
+CREATE database myfarm;
+
+use myfarm;
+
+create table user (user_id numeric NOT NULL, 
+					first_name VARCHAR(20), 
+					last_name VARCHAR(20), gender CHAR(1), grade INT(10), 
+					dob DATE, username varchar(20) NOT NULL, pwd varchar(20) NOT NULL, 
+					PRIMARY KEY (user_id),
+					CONSTRAINT UC_UName UNIQUE (username));
+
+INSERT INTO user VALUES (1, 'Naresh','Bathina','M','10','1988-05-29', 'nbathina', 'nbathina');
+
+INSERT INTO user VALUES (2, 'Aditya','Raju','M','10','1989-06-30', 'araju', 'araju');
+
+create table roles (role_id numeric not null, role_name varchar(10) not null, parent_role numeric, mode int(1),
+					PRIMARY KEY (role_id),
+					FOREIGN KEY (parent_role) REFERENCES roles(role_id));
+
+create table user_roles (id numeric, user_id numeric, role_id numeric, 
+							PRIMARY KEY (id),
+                            FOREIGN KEY (user_id) REFERENCES user(user_id),
+                            FOREIGN KEY (role_id) REFERENCES roles(role_id),
+							CONSTRAINT UC_user_role UNIQUE (role_id, user_id));
+                           
+create table product (id numeric, name varchar(20), subtitle varchar(20), 
+							price float(10,2), 
+							qty float(10,2), 
+                            status int(1),
+                            image varchar(200),
+                            units varchar(10), 
+                            notes varchar(100), 
+							description varchar(100), 
+							PRIMARY KEY (id),
+							CONSTRAINT UC_prod UNIQUE (name, subtitle, status));  
+                            
+INSERT INTO product VALUES (1, "Chicken", "Cheriyal Chicken", 200.00, 10000.00, 1, '',
+							'Gram', 'Bought from Cheriyal', '');      
+                            
+INSERT INTO product VALUES (2, "Mutton", "Cheriyal Mutton", 700.00, 10000.00, 1, '',
+							'Gram', 'Bought from Cheriyal', '');  
