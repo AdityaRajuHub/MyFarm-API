@@ -1,6 +1,5 @@
 package com.naa.springsecurityjwt.filters;
 
-import com.naa.springsecurityjwt.MyUserDetailsService;
 import com.naa.springsecurityjwt.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,7 +19,7 @@ import java.io.IOException;
 public class JwtRequestFilter extends OncePerRequestFilter {
 
     @Autowired
-    private MyUserDetailsService userDetailsService;
+    private com.naa.springsecurityjwt.service.MyUserDetailsService userDetailsService;
 
     @Autowired
     private JwtUtil jwtUtil;

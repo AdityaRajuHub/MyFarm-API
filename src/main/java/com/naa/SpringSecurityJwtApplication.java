@@ -1,4 +1,4 @@
-package com.naa.springsecurityjwt;
+package com.naa;
 
 import java.util.Arrays;
 
@@ -28,17 +28,14 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
 
 import com.naa.springsecurityjwt.models.AuthenticationRequest;
 import com.naa.springsecurityjwt.models.AuthenticationResponse;
+import com.naa.springsecurityjwt.service.MyUserDetailsService;
 import com.naa.springsecurityjwt.util.JwtUtil;
 import com.naa.springsecurityjwt.filters.JwtRequestFilter;
 
-@SpringBootApplication(scanBasePackages = {
-        "com.naa"
-       
-})
+@SpringBootApplication
 public class SpringSecurityJwtApplication {
 
 	public static void main(String[] args) {

@@ -1,9 +1,8 @@
 package com.naa.response;
 
-import java.util.ArrayList;
 import java.util.List;
 import com.google.common.collect.Lists;
-import com.naa.models.Product;
+import com.naa.model.Product;
 
 public class ProductListResponse  {
 	List<Product> products = Lists.newArrayList();

@@ -1,8 +1,5 @@
 package com.naa.response;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public  class CommonResponse {
 	protected boolean success;
     protected String message;
